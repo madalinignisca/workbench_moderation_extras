@@ -12,9 +12,11 @@
  */
 function workbench_moderation_extras_admin_settings() {
   // Get possible node types (must have moderation enabled on them)
-  $node_types = node_type_get_types(); // replace with function that gets moderated node types. check workbench api
+  $node_types = node_type_get_types();
   foreach ($node_types as $node_type) {
-    $options[$node_type->type] = $node_type->name;
+    if (workbench_moderation_node_type_moderated($node_type->type)) {
+      $options[$node_type->type] = $node_type->name;
+    }
   }
 
   // build form elements
