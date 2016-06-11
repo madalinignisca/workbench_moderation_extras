@@ -1,0 +1,12 @@
+name = Workbench Moderation Extras
+description = Allows to set users to receive email notifications for certain transition states
+
+package = Workbench
+core = 7.x
+
+dependencies[] = system (>= 7.40)
+dependencies[] = workbench_moderation:workbench_moderation
+
+files[] = workbench_moderation_extras.module
+
+configure = admin/config/workbench/moderation_extras
