@@ -1,1 +1,24 @@
 <?php
+
+/**
+ * Implements hook_menu().
+ */
+function workbench_moderation_extras_menu() {
+  $items = array();
+
+  // Module settings
+  $items["admin/config/workbench/moderation/extras"] = array(
+    'title' => 'Workbench Moderation Extras',
+    'description' => 'Allows to set users to receive email notifications for certain transition states',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array(
+      'workbench_moderation_extras_form',
+    ),
+    'access arguments' => array(
+      'administer workbench moderation extras',
+    ),
+    'file' => 'workbench_moderation_extras.admin.inc',
+  );
+
+  return $items;
+}
