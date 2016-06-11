@@ -38,6 +38,7 @@ function workbench_moderation_extras_admin_settings() {
   $form['workbench_moderation_extras_time'] = array(
     '#type' => 'textfield',
     '#title' => 'How many seconds until a Published must change state?',
+    '#description' => 'This will check since the last update',
     '#default_value' => 3600 * 24 * 28, // 4 weeks
     '#maxlength' => 16
   );

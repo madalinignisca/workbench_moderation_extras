@@ -1,0 +1,4 @@
+// Time since last update
+
+We should check only Published Nodes since their last update and change to this state.
+The new state mush inherit Publish state for the node.
