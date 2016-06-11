@@ -9,4 +9,4 @@ dependencies[] = workbench_moderation:workbench_moderation
 
 files[] = workbench_moderation_extras.module
 
-configure = admin/config/workbench/moderation/extras
+configure = admin/config/workbench/moderation_extras

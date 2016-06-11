@@ -7,12 +7,12 @@ function workbench_moderation_extras_menu() {
   $items = array();
 
   // Module settings
-  $items["admin/config/workbench/moderation/extras"] = array(
+  $items["admin/config/workbench/moderation_extras"] = array(
     'title' => 'Workbench Moderation Extras',
     'description' => 'Allows to set users to receive email notifications for certain transition states',
     'page callback' => 'drupal_get_form',
     'page arguments' => array(
-      'workbench_moderation_extras_form',
+      'workbench_moderation_extras_admin_settings',
     ),
     'access arguments' => array(
       'administer workbench moderation extras',
