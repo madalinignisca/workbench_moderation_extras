@@ -47,3 +47,7 @@ function workbench_moderation_extras_admin_settings() {
   return system_settings_form($form);
 }
 
+// validate and save submitted data
+function workbench_moderation_extras_admin_settings_submit() {
+
+}
