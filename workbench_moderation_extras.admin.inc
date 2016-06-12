@@ -27,7 +27,9 @@ function workbench_moderation_extras_admin_settings() {
     '#type' => 'checkboxes',
     '#title' => t('Select moderated node types'),
     '#options' => $options['types'],
+    '#default_value' => variable_get('workbench_moderation_extras_node_types'),
   );
+  // @TODO We sure need something to check if the node type is taken out of moderation...
 
   // Get users to receive emails
   // This should be a multi entry field like on "Mentors" list on Drupal.org
