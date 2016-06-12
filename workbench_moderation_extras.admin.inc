@@ -29,6 +29,7 @@ function workbench_moderation_extras_admin_settings() {
     '#options' => $options['types'],
     '#default_value' => variable_get('workbench_moderation_extras_node_types'),
   );
+  // also if no value, creates a warning in checkbox constructions. please check
   // @TODO We sure need something to check if the node type is taken out of moderation...
 
   // Get users to receive emails

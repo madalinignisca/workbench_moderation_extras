@@ -30,8 +30,30 @@ function workbench_moderation_extras_menu() {
  */
 function workbench_moderation_extras_cron() {
   // get all published nodes that have been updated more then needed seconds ago
-  $nodes = db_select('nodes');
+  $node_types = variable_get('workbench_moderation_extras_node_types');
+  watchdog('info', serialize($node_types));
+  $nodes = db_select('workbench_moderation_node_history', 'wmnh');
+  $nodes->fields('wmnh', array('nid'));
+  $nodes->join('node', 'node', '(wmnh.nid=node.nid)');
+  $nodes->condition('wmnh.state', 'published', '=');
+  $nodes->condition('wmnh.published', 1, '=');
+  if (is_array($node_types) AND !empty($node_types)) {
+    $nodes_or = db_or();
+    foreach ($node_types as $type) {
+      $nodes_or->condition('node.type', $type);
+    }
+    $nodes->condition($nodes_or);
+  }
+  $nodes->condition('node.changed', time() - variable_get('workbench_moderation_extras_time', 3600 * 24 * 7), '<'); // only if lower then expiration time
+  $nodes = $nodes->execute();
+  $nids = array();
+  foreach ($nodes as $node) {
+    $nids[] = $node->nid;
+  }
+  watchdog('info', serialize($nids));
   // Change their state
+
+//  foreach ();
 
   // Notify all needed users about it
 }

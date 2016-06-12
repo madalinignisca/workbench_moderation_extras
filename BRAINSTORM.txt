@@ -1,4 +1,6 @@
 // Time since last update
 
 We should check only Published Nodes since their last update and change to this state.
-The new state mush inherit Publish state for the node.
+The new state mush keep Publish state for the node.
+
+On crun run, we should check last update of Publised state Nodes and action on them only
