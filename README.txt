@@ -26,7 +26,7 @@ CONTENTS
 -------------
 
 Extends Workbench Moderation by adding email notifications to selected people
-when specific transitions ocure to content nodes.
+when specific transitions occur to content nodes.
 
 2.  Requirements
 ----------------
@@ -39,9 +39,13 @@ Workbench Notifier requires:
 -----------------
 
 - Download and install the module.
-- Admin page can be accessed by users/roles with Workbench Moderation Access
-- Go to 'admin/config/workbench/extras' and enable node types, transition state
-and which users should receive notifications.
-- Add a notification message template or use the default provided. To send
-details about the node transitioned, Token must be enabled also.
+- Admin page can be accessed by users/roles with 'moderate content from published to regular_review'
+- Go to 'admin/config/workbench/extras' and enable node types,
+  which users should receive notifications and in how many seconds to expire nodes
+
+4.  TODO
+----------------
+
+- Allow admin to personalize the email template :) // would depend on token...
+- Clean configuration on uninstall
 
