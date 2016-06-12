@@ -34,7 +34,7 @@ function workbench_moderation_extras_admin_settings() {
 
   // Get users to receive emails
   // This should be a multi entry field like on "Mentors" list on Drupal.org
-  $users = workbench_moderation_extras_get_users();
+  $users = workbench_moderation_extras_get_allowed_users();
   $options['users'] = array();
   foreach ($users as $user) {
     $options['users'][$user->uid] = $user->name;
@@ -75,7 +75,7 @@ function workbench_moderation_extras_admin_settings_submit($form, $form_state) {
  *
  * @return array
  */
-function workbench_moderation_extras_get_users() {
+function workbench_moderation_extras_get_allowed_users() {
   // our needed permission: 'moderate content from published to regular_review'
   $query = "SELECT DISTINCT u.uid, u.name, u.mail FROM {users} u
 LEFT JOIN {users_roles} ur ON u.uid = ur.uid
