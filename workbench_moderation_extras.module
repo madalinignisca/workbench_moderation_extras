@@ -50,7 +50,8 @@ function workbench_moderation_extras_cron() {
     $users = workbench_moderation_extras_get_users();
 
     foreach($users as $user) {
-      workbench_moderation_extras_mail($user);
+      _workbench_moderation_extras_mail($user);
+      // that moment when you make an infinite recursive loop and you wonder why... Because of hooks :)
     }
   }
 }
@@ -116,17 +117,21 @@ function workbench_moderation_extras_get_users() {
 
 }
 
-function workbench_moderation_extras_mail($user) {
-  var_dump($user); return;
-  drupal_mail(
-    'workbench_moderation_extras',
-    'regular_review',
-    $user['mail'],
-    'Some nodes have expired and need a Regular Review to keep them fresh'
-  );
+function _workbench_moderation_extras_mail($user) {
+  $module = 'workbench_moderation_extras';
+  $key = 'regular_review';
+  $to = $user['mail'];
+  $language = language_default();
+  $params = 'Some nodes have expired and need a Regular Review to keep them fresh';
+  $from = variable_get('site_mail');
+  $send = TRUE;
+
+  drupal_mail($module, $key, $to, $language, $params, $from, $send);
 
   watchdog('info', 'Email sent to' . $user['mail']);
 }
+
+
 
 /**
  * Implements hook_init().
