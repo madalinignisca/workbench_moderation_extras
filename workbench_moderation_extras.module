@@ -30,7 +30,7 @@ function workbench_moderation_extras_menu() {
  */
 function workbench_moderation_extras_cron() {
   // get all published nodes that have been updated more then needed seconds ago
-
+  $nodes = db_select('nodes');
   // Change their state
 
   // Notify all needed users about it

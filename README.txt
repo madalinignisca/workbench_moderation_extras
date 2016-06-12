@@ -39,7 +39,7 @@ Workbench Notifier requires:
 -----------------
 
 - Download and install the module.
-- Admin page can be accessed by users/roles with 'moderate content from published to regular_review'
+- Edit permission for roles allowed to 'moderate content from published to regular_review'
 - Go to 'admin/config/workbench/extras' and enable node types,
   which users should receive notifications and in how many seconds to expire nodes
 
