@@ -33,16 +33,17 @@ function workbench_moderation_extras_admin_settings() {
 
   // Get users to receive emails
   // This should be a multi entry field like on "Mentors" list on Drupal.org
-  $options['users'] = workbench_moderation_extras_get_users();
-  dsm($options['users']);
+  $users = workbench_moderation_extras_get_users();
+  $options['users'] = array();
+  foreach ($users as $user) {
+    $options['users'][$user->uid] = $user->name;
+  }
   $form['workbench_moderation_extras_users'] = array(
     '#type' => 'checkboxes',
     '#title' => t('Select users to receive email notifications'),
     '#options' => $options['users'],
     '#default_value' => variable_get('workbench_moderation_extras_users'),
   );
-
-  // Set which state to be used for notifications
 
   // Set the amount of time for a state to become invalid in seconds
   $form['workbench_moderation_extras_time'] = array(
@@ -74,12 +75,12 @@ function workbench_moderation_extras_admin_settings_submit($form, $form_state) {
  * @return array
  */
 function workbench_moderation_extras_get_users() {
-//  $query = "SELECT DISTINCT * FROM {users}";
+  // our needed permission: 'moderate content from published to regular_review'
   $query = "SELECT DISTINCT u.uid, u.name, u.mail FROM {users} u
 LEFT JOIN {users_roles} ur ON u.uid = ur.uid
 LEFT JOIN {role_permission} p ON ur.rid = p.rid
 WHERE u.uid != 0 AND u.uid != 1 AND (p.permission IS NOT NULL AND
-p.permission LIKE '%access workbench moderation%')
+p.permission LIKE '%moderate content from published to regular_review%')
 ORDER BY u.created DESC";
   return db_query($query)->fetchAllAssoc('uid');
 }
