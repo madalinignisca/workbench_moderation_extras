@@ -39,6 +39,7 @@ Workbench Notifier requires:
 -----------------
 
 - Download and install the module.
+- Admin page can be accessed by users/roles with Workbench Moderation Access
 - Go to 'admin/config/workbench/extras' and enable node types, transition state
 and which users should receive notifications.
 - Add a notification message template or use the default provided. To send

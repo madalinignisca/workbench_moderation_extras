@@ -15,7 +15,7 @@ function workbench_moderation_extras_menu() {
       'workbench_moderation_extras_admin_settings',
     ),
     'access arguments' => array(
-      'administer workbench moderation extras',
+      'administer workbench moderation',
     ),
     'file' => 'workbench_moderation_extras.admin.inc',
   );
