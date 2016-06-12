@@ -30,8 +30,24 @@ function workbench_moderation_extras_menu() {
  */
 function workbench_moderation_extras_cron() {
   // get all published nodes that have been updated more then needed seconds ago
+  $nids = _workbench_moderation_extras_get_published_state_nodes();
+
+  // Change their state
+  if (!empty($nids)) {
+    foreach ($nids as $nid) {
+      $node = node_load($nid);
+      $node->workbench_moderation['updating_live_revision'] = 1;
+      workbench_moderation_moderate($node, 'regular_review');
+      node_save($node);
+      // Ooops, not working like we thought it would.
+    }
+  }
+
+  // Notify all needed users about it
+}
+
+function _workbench_moderation_extras_get_published_state_nodes() {
   $node_types = variable_get('workbench_moderation_extras_node_types');
-  watchdog('info', serialize($node_types));
   $nodes = db_select('workbench_moderation_node_history', 'wmnh');
   $nodes->fields('wmnh', array('nid'));
   $nodes->join('node', 'node', '(wmnh.nid=node.nid)');
@@ -50,10 +66,5 @@ function workbench_moderation_extras_cron() {
   foreach ($nodes as $node) {
     $nids[] = $node->nid;
   }
-  watchdog('info', serialize($nids));
-  // Change their state
-
-//  foreach ();
-
-  // Notify all needed users about it
+  return $nids;
 }
