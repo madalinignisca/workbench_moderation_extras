@@ -131,7 +131,15 @@ function _workbench_moderation_extras_mail($user) {
   watchdog('info', 'Email sent to' . $user['mail']);
 }
 
-
+/**
+ * Implements hook_mail().
+ */
+function workbench_moderation_extras_mail($key, &$message, $params) {
+  if ($key === 'regular_review') {
+    $message['subject'] = 'Some nodes were set to Regular Review';
+    $message['body'] = array($params);
+  }
+}
 
 /**
  * Implements hook_init().
