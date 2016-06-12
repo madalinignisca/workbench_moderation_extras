@@ -29,5 +29,9 @@ function workbench_moderation_extras_menu() {
  * Implements hook_cron().
  */
 function workbench_moderation_extras_cron() {
-  watchdog('notice', 'I run from Workbench Moderation Extras Cron');
+  // get all published nodes that have been updated more then needed seconds ago
+
+  // Change their state
+
+  // Notify all needed users about it
 }
