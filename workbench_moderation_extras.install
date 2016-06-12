@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * @file
+ * Install file for the Workbench Moderation Extras module.
+ */
+
+/**
+ * Implements hook_install().
+ */
+function workbench_moderation_extras_install() {
+  // Insert values.
+  _workbench_moderation_extras_insert_values();
+}
+
+/**
+ * Implements hook_uninstall().
+ */
+function workbench_moderation_extras_uninstall() {
+  db_delete('workbench_moderation_states')->condition('name', 'regular_review')->execute();
+  db_delete('workbench_moderation_transitions')->condition('from_name', 'published')->condition('to_name', 'regular_review')->execute();
+  watchdog('notice', 'Workbench Moderation Extras state and transition removed');
+}
+
+/**
+ * Adds default data for workflow states
+ */
+function _workbench_moderation_extras_insert_values() {
+  // Default states.
+  $states = array(
+    array(
+      'name' => 'regular_review',
+      'label' => 'Regular Review',
+      'description' => 'This version needs a review',
+      'weight' => 98,
+    ),
+  );
+
+  // Save default states to the database.
+  $query = db_insert('workbench_moderation_states')
+    ->fields(array('name', 'label', 'description', 'weight'));
+
+  foreach ($states as $state) {
+    $query->values($state);
+  }
+
+  $query->execute();
+
+  // Default transitions.
+  $transitions = array(
+    array(
+      'name' => 'Regular Review',
+      'from_name' => 'published',
+      'to_name' => 'regular_review',
+    ),
+  );
+
+  // Save default transitions to the database.
+  $query = db_insert('workbench_moderation_transitions')
+    ->fields(array('name', 'from_name', 'to_name'));
+
+  foreach ($transitions as $transition) {
+    $query->values($transition);
+  }
+
+  $query->execute();
+}

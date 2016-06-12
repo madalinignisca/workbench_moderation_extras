@@ -33,7 +33,14 @@ function workbench_moderation_extras_admin_settings() {
 
   // Get users to receive emails
   // This should be a multi entry field like on "Mentors" list on Drupal.org
-//  $form[]
+  $options['users'] = workbench_moderation_extras_get_users();
+  dsm($options['users']);
+  $form['workbench_moderation_extras_users'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Select users to receive email notifications'),
+    '#options' => $options['users'],
+    '#default_value' => variable_get('workbench_moderation_extras_users'),
+  );
 
   // Set which state to be used for notifications
 
@@ -59,4 +66,20 @@ function workbench_moderation_extras_admin_settings_validate($form, &$form_state
 
 function workbench_moderation_extras_admin_settings_submit($form, $form_state) {
 
+}
+
+/**
+ * Get a list of users that have permissions to access workbench moderation
+ *
+ * @return array
+ */
+function workbench_moderation_extras_get_users() {
+//  $query = "SELECT DISTINCT * FROM {users}";
+  $query = "SELECT DISTINCT u.uid, u.name, u.mail FROM {users} u
+LEFT JOIN {users_roles} ur ON u.uid = ur.uid
+LEFT JOIN {role_permission} p ON ur.rid = p.rid
+WHERE u.uid != 0 AND u.uid != 1 AND (p.permission IS NOT NULL AND
+p.permission LIKE '%access workbench moderation%')
+ORDER BY u.created DESC";
+  return db_query($query)->fetchAllAssoc('uid');
 }
