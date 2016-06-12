@@ -4,3 +4,5 @@ We should check only Published Nodes since their last update and change to this 
 The new state mush keep Publish state for the node.
 
 On crun run, we should check last update of Publised state Nodes and action on them only
+
+We need to create a new revision, set state to regular_review and notify...

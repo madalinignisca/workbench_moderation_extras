@@ -33,6 +33,8 @@ function workbench_moderation_extras_cron() {
   $nids = _workbench_moderation_extras_get_published_state_nodes();
 
   // Change their state
+  // So, a state is tied by a vid (revision id)
+  // That means we need a new revision copy?
   if (!empty($nids)) {
     foreach ($nids as $nid) {
       $node = node_load($nid);
@@ -51,7 +53,8 @@ function _workbench_moderation_extras_get_published_state_nodes() {
   $nodes = db_select('workbench_moderation_node_history', 'wmnh');
   $nodes->fields('wmnh', array('nid'));
   $nodes->join('node', 'node', '(wmnh.nid=node.nid)');
-  $nodes->condition('wmnh.state', 'published', '=');
+  $nodes->condition('wmnh.from_state', 'regular_review', '!='); // we don't want to change back on this.
+//  $nodes->condition('wmnh.state', 'published', '='); // from_state != regular_review to state publish should be all covered cases.
   $nodes->condition('wmnh.published', 1, '=');
   if (is_array($node_types) AND !empty($node_types)) {
     $nodes_or = db_or();
@@ -60,7 +63,7 @@ function _workbench_moderation_extras_get_published_state_nodes() {
     }
     $nodes->condition($nodes_or);
   }
-  $nodes->condition('node.changed', time() - variable_get('workbench_moderation_extras_time', 3600 * 24 * 7), '<'); // only if lower then expiration time
+  $nodes->condition('wmnh.stamp', time() - variable_get('workbench_moderation_extras_time', 3600 * 24 * 7), '<'); // only if lower then expiration time
   $nodes = $nodes->execute();
   $nids = array();
   foreach ($nodes as $node) {
