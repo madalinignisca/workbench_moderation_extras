@@ -11,7 +11,7 @@ function _workbench_moderation_extras_get_allowed_users() {
 LEFT JOIN {users_roles} ur ON u.uid = ur.uid
 LEFT JOIN {role_permission} p ON ur.rid = p.rid
 WHERE u.uid != 0 AND u.uid != 1 AND (p.permission IS NOT NULL AND
-p.permission LIKE '%moderate content from published to regular_review%')
+p.permission LIKE '%use workbench_moderation regular review tab%')
 ORDER BY u.created DESC";
   return db_query($query)->fetchAllAssoc('uid');
 }

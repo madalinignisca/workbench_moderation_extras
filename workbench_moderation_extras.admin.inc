@@ -45,6 +45,11 @@ function workbench_moderation_extras_admin_settings() {
     '#options' => $options['users'],
     '#default_value' => variable_get('workbench_moderation_extras_users'),
   );
+  if (empty($options['users'])) {
+    $form['workbench_moderation_extras_users'] = array(
+      '#markup' => t('Please make sure to have users with permission Use "Regular review" workbench tab'),
+    );
+  }
 
   // Set the amount of time for a state to become invalid in seconds
   $form['workbench_moderation_extras_time'] = array(
@@ -53,8 +58,6 @@ function workbench_moderation_extras_admin_settings() {
     '#default_value' => variable_get('workbench_moderation_extras_time', 3600 * 24 * 28), // 4 weeks by default
     '#maxlength' => 16
   );
-
-  $form['#submit'][] = 'workbench_moderation_extras_admin_settings_submit';
 
   return system_settings_form($form);
 }

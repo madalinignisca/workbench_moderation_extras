@@ -67,3 +67,14 @@ function workbench_moderation_extras_mail($key, &$message, $params) {
     $message['body'] = array($params);
   }
 }
+
+/**
+ * Implements hook_permission().
+ */
+function workbench_moderation_extras_permission() {
+  return array(
+    'use workbench_moderation regular review tab' => array(
+      'title' => t('Use "Regular review" workbench tab'),
+    ),
+  );
+}
