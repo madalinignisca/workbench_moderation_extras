@@ -38,10 +38,7 @@ function workbench_moderation_extras_cron() {
   if (!empty($nids)) {
     foreach ($nids as $nid) {
       $node = node_load($nid);
-      $node->workbench_moderation['updating_live_revision'] = 1;
-      workbench_moderation_moderate($node, 'regular_review');
-      node_save($node);
-      // Ooops, not working like we thought it would.
+
     }
   }
 
@@ -70,4 +67,11 @@ function _workbench_moderation_extras_get_published_state_nodes() {
     $nids[] = $node->nid;
   }
   return $nids;
+}
+
+/**
+ * Implements hook_init().
+ */
+function workbench_moderation_extras_init() {
+  dsm(workbench_moderation_states());
 }
