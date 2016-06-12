@@ -22,3 +22,24 @@ function workbench_moderation_extras_menu() {
 
   return $items;
 }
+
+/**
+ * Implements hook_cron_queue_info().
+ *
+ * Adding our queue of tasks
+ */
+function workbench_moderation_extras_cron_queue_info() {
+  $queues['workbench_moderation_extras_change_state'] = array(
+    'worker callback' => 'workbench_moderation_extras_change_state_worker',
+    // 'time' => 15, // should it be lower as it's not critical?
+    // 'skip on cron' => TRUE, // if you want to skip it and trigger it different
+  );
+  return $queues;
+}
+
+/**
+ * Workbench Moderarion change state dummy
+ */
+function workbench_moderation_extras_change_state_worker($item) {
+  watchdog('wmecsw', serialize($item));
+}

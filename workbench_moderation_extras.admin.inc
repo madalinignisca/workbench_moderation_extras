@@ -31,6 +31,7 @@ function workbench_moderation_extras_admin_settings() {
 
   // Get users to receive emails
   // This should be a multi entry field like on "Mentors" list on Drupal.org
+//  $form[]
 
   // Set which state to be used for notifications
 
@@ -38,8 +39,7 @@ function workbench_moderation_extras_admin_settings() {
   $form['workbench_moderation_extras_time'] = array(
     '#type' => 'textfield',
     '#title' => 'How many seconds until a Published must change state?',
-    '#description' => 'This will check since the last update',
-    '#default_value' => 3600 * 24 * 28, // 4 weeks
+    '#default_value' => variable_get('workbench_moderation_extras_time', 3600 * 24 * 28), // 4 weeks by default
     '#maxlength' => 16
   );
 
@@ -49,6 +49,12 @@ function workbench_moderation_extras_admin_settings() {
 }
 
 // validate and save submitted data
-function workbench_moderation_extras_admin_settings_submit() {
+function workbench_moderation_extras_admin_settings_validate($form, &$form_state) {
+  if(!is_numeric($form_state['values']['workbench_moderation_extras_time'])) {
+    form_set_error('workbench_moderation_extras_time', t('Please enter a number'));
+  }
+}
+
+function workbench_moderation_extras_admin_settings_submit($form, $form_state) {
 
 }
