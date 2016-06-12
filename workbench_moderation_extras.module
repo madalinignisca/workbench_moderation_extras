@@ -38,7 +38,11 @@ function workbench_moderation_extras_cron() {
   if (!empty($nids)) {
     foreach ($nids as $nid) {
       $node = node_load($nid);
-
+      $node->revision = 1;
+      $node->log = t('This node needs a Regular review');
+      node_save($node);
+      workbench_moderation_moderate($node, 'regular_review');
+      unset($node);
     }
   }
 
@@ -73,5 +77,5 @@ function _workbench_moderation_extras_get_published_state_nodes() {
  * Implements hook_init().
  */
 function workbench_moderation_extras_init() {
-  dsm(workbench_moderation_states());
+//  dsm(workbench_moderation_states());
 }
