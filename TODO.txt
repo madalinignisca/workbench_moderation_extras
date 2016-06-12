@@ -1,4 +1,4 @@
-- Allow admin to set email message and body;
-- Create default view for Regular reviews;
+- [ ] TODO: Allow admin to set email message and body;
+- [x] DONE: Create default view for Regular reviews;
 
 - Sugestions?
